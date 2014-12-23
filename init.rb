@@ -1,18 +1,37 @@
 require 'redmine'
 
 # Patches to the Redmine core.
-require 'dispatcher'
-Dispatcher.to_prepare :redmine_newissuealerts do
-  require_dependency 'issue'
-  # Guards against including the module multiple time (like in tests)
-  # and registering multiple callbacks
-  unless Issue.included_modules.include? RedmineNewissuealerts::IssuePatch
-    Issue.send(:include, RedmineNewissuealerts::IssuePatch)
+require 'dispatcher' unless Rails::VERSION::MAJOR >= 3
+
+if Rails::VERSION::MAJOR >= 3
+   ActionDispatch::Callbacks.to_prepare do
+    require_dependency 'issue'
+    # Guards against including the module multiple time (like in tests)
+    # and registering multiple callbacks
+    unless Issue.included_modules.include? RedmineNewissuealerts::IssuePatch
+      Issue.send(:include, RedmineNewissuealerts::IssuePatch)
+    end
+
+    require_dependency 'projects_helper'
+    unless ProjectsHelper.included_modules.include? RedmineNewissuealerts::ProjectsHelperPatch
+      ProjectsHelper.send(:include, RedmineNewissuealerts::ProjectsHelperPatch)
+    end
   end
 
-  require_dependency 'projects_helper'
-  unless ProjectsHelper.included_modules.include? RedmineNewissuealerts::ProjectsHelperPatch
-    ProjectsHelper.send(:include, RedmineNewissuealerts::ProjectsHelperPatch)
+else
+
+  Dispatcher.to_prepare :redmine_newissuealerts do
+    require_dependency 'issue'
+    # Guards against including the module multiple time (like in tests)
+    # and registering multiple callbacks
+    unless Issue.included_modules.include? RedmineNewissuealerts::IssuePatch
+      Issue.send(:include, RedmineNewissuealerts::IssuePatch)
+    end
+
+    require_dependency 'projects_helper'
+    unless ProjectsHelper.included_modules.include? RedmineNewissuealerts::ProjectsHelperPatch
+      ProjectsHelper.send(:include, RedmineNewissuealerts::ProjectsHelperPatch)
+    end
   end
 end
 
