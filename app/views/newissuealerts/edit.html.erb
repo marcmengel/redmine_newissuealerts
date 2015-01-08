@@ -1,18 +1,23 @@
 <h2><%= l(:newissuealerts_edit, :project => @project.name) %></h2>
 <!-- form_for should be here : -->
 <%= form_tag( newissuealert_edit_path(@project.id,@newissuealert.id))  %>
-<!-- <form action="<%= newissuealert_edit_path(@project.id) %>" method="post"> -->
- <%= l(:email_addresses) %> 
- <input type="text" name="mail_addresses" value="<%=@newissuealert.mail_addresses%>"> <br />
- <em><%= l(:email_addresses_comma_separated) %></em>
- <%= l(:enabled) %> 
- <input type="checkbox" name="enabled" checked="<%=@newissuealert.enabled%>"> <br />
- <%= l(:newissuealerts_set_priority) %>
- <input type="checkbox" name="priority" checked="<%=@newissuealert.priority%>"> <br />
- <input type="submit" value="submit">
+<fieldset class="box tabular">
+ <p><label><%= l(:email_addresses) %> </label>
+ <input type="text" name="newissuealert[mail_addresses]" width="60" value="<%=@newissuealert.mail_addresses%>"> <br />
+ </p>
+ <em><%= l(:email_addresses_comma_separated) %></em> <br />
+ <p><label><%= l(:enabled) %> </label>
+ <input type="checkbox" name="newissuealert[enabled]" checked="<%=@newissuealert.enabled%>"> <br />
+ </p>
+ <p><label> <%= l(:newissuealerts_set_priority) %> </label>
+ <input type="checkbox" name="newissuealert[priority]" checked="<%=@newissuealert.priority%>"> <br />
+ </p>
+  <p>  <%= submit_tag l(:save), :name => "save" %> <%= submit_tag l(:delete), :name => "delete", :confirm => l(:newissuealerts_deletion_confirm) %> </p>
+</fieldset>
 </form> 
 
-<!-- formshould be done this way, but comes up blank!.. -->
+
+<!-- formshould be done this way, but comes up blank!
 
 <% form_for @newissuealert do |f| %>
 <div class="box tabular settings">
@@ -29,4 +34,4 @@
   <p>  <%= submit_tag l(:save), :name => "save" %> <%= submit_tag l(:delete), :name => "delete", :confirm => l(:newissuealerts_deletion_confirm) %> </p>
 </div>
 <% end %>
-
+. -->

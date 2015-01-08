@@ -16,9 +16,9 @@ class NewissuealertsController < ApplicationController
       @newissuealert.enabled = params[:enabled]
       @newissuealert.mail_addresses = params[:mail_addresses]
       if @newissuealert.save
-        flash[:notice] = l(:newissuealert_creation_success)
+        flash[:notice] = l(:newissuealerts_creation_success)
       else
-        flash.now[:error] = l(:newissuealert_creation_failed)
+        flash.now[:error] = l(:newissuealerts_creation_failed)
       end
       redirect_to :controller => "projects", :action => 'settings', :id => @project.identifier, :tab => 'newissuealert'
     end
