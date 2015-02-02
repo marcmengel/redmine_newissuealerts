@@ -1,7 +1,7 @@
 <h2><%= l(:newissuealerts_new) +  @project.name %></h2>
 
 <%#<% form_for :newissuealert,  url: {action: :new} do |f| %>
-<%= form_tag( newissuealert_path(@project.name), method: "post")  do %>
+<%= form_tag( newissuealert_path(@project.id), method: "post")  do %>
 <div class="box tabular settings">
   <p>
  <%= label_tag :mail_addresses, l(:email_addresses) %>  <%= text_field_tag :mail_addresses %>
